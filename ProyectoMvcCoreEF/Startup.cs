@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProyectoMvcCoreEF.Data;
 using ProyectoMvcCoreEF.Models;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,12 @@ namespace ProyectoMvcCoreEF
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //pasamos por parametro el nombre de la cadena de appsettings.json
+            String cadenaSqlServer = this.Configuration.GetConnectionString("cadenahospitalsql");
+            DepartamentosContextSQLServer contextSQL = new DepartamentosContextSQLServer(cadenaSqlServer);
+            services.AddTransient<IDepartamentosContext>(z => contextSQL);
+
+
             //DEBEMOS RESOLVER LAS DEPENDENCIAS ANTES DE
             //CARGAR LOS CONTROLADORES Y LOS SERVICIOS 
             //services.AddTransient<Coche>();
