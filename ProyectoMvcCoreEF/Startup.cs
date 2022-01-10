@@ -25,10 +25,15 @@ namespace ProyectoMvcCoreEF
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            String cadenaMySQL =
+                this.Configuration.GetConnectionString("cadenahospitalmysql");
+            DepartamentosContextMySql contextMySql = new DepartamentosContextMySql(cadenaMySQL);
+            services.AddTransient<IDepartamentosContext>(x => contextMySql);
             //pasamos por parametro el nombre de la cadena de appsettings.json
-            String cadenaSqlServer = this.Configuration.GetConnectionString("cadenahospitalsql");
-            DepartamentosContextSQLServer contextSQL = new DepartamentosContextSQLServer(cadenaSqlServer);
-            services.AddTransient<IDepartamentosContext>(z => contextSQL);
+            //String cadenaSqlServer = this.Configuration.GetConnectionString("cadenahospitalsql");
+            //DepartamentosContextSQLServer contextSQL = new DepartamentosContextSQLServer(cadenaSqlServer);
+            //services.AddTransient<IDepartamentosContext>(z => contextSQL);
 
 
             //DEBEMOS RESOLVER LAS DEPENDENCIAS ANTES DE
